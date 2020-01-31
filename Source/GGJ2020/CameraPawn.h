@@ -4,40 +4,39 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "PlayerCamera.generated.h"
+#include "CameraPawn.generated.h"
 
-class USceneComponent;
 class USpringArmComponent;
 class UCameraComponent;
 
 UCLASS()
-class GGJ2020_API APlayerCamera : public APawn
+class GGJ2020_API ACameraPawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	APlayerCamera();
+	// Sets default values for this pawn's properties
+	ACameraPawn();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		USceneComponent* Scene;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	USceneComponent* Scene;
+		USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	USpringArmComponent* SpringArm;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UCameraComponent* Camera;
+		UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MovementSpeed = 10.f;
+		float MovementSpeed = 10.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float ScrollSpeed = 30.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MinZoom = 500.f;
+		float MinZoom = 500.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaxZoom = 2000.f;
+		float MaxZoom = 2000.f;
 
 
 protected:
@@ -50,8 +49,4 @@ protected:
 	void MoveUp(float Value);
 	void MoveRight(float Value);
 	void Zoom(float Value);
-
-
-
-
 };
