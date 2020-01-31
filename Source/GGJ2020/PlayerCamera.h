@@ -31,7 +31,7 @@ public:
 	float MovementSpeed = 10.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float ScrollSpeed = 30.f;
+	float ScrollSpeed = 30.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MinZoom = 500.f;
