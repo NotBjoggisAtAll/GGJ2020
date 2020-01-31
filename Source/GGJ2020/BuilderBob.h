@@ -14,6 +14,9 @@ class GGJ2020_API ABuilderBob : public ACharacter
 public:
 	ABuilderBob();
 
+	UPROPERTY(BlueprintReadOnly)
+	bool bMoveRight = true;
+
 protected:
 	virtual void BeginPlay() override;
 
