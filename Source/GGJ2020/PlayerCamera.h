@@ -26,12 +26,32 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UCameraComponent* Camera;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MovementSpeed = 10.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float ScrollSpeed = 30.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MinZoom = 500.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxZoom = 2000.f;
+
+
 protected:
 	virtual void BeginPlay() override;
 
-public:	
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void MoveUp(float Value);
+	void MoveRight(float Value);
+	void Zoom(float Value);
+
+
+
 
 };
