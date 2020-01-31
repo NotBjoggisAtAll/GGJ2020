@@ -1,13 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "PlayerCamera.h"
+
+#include "CameraPawn.h"
 #include "Components/SceneComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
-APlayerCamera::APlayerCamera()
+
+// Sets default values
+ACameraPawn::ACameraPawn()
 {
+ 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Scene = CreateDefaultSubobject<USceneComponent>("Scene");
@@ -18,35 +22,35 @@ APlayerCamera::APlayerCamera()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-
 }
 
 // Called when the game starts or when spawned
-void APlayerCamera::BeginPlay()
+void ACameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	SetActorRotation(FRotator(0, -90, 0));
 
 }
 
 // Called every frame
-void APlayerCamera::Tick(float DeltaTime)
+void ACameraPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void APlayerCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ACameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("MoveUp", this, &APlayerCamera::MoveUp);
-	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCamera::MoveRight);
-	PlayerInputComponent->BindAxis("Zoom", this, &APlayerCamera::Zoom);
+	PlayerInputComponent->BindAxis("MoveUp", this, &ACameraPawn::MoveUp);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
+	PlayerInputComponent->BindAxis("Zoom", this, &ACameraPawn::Zoom);
 
 }
 
-void APlayerCamera::MoveUp(float Value)
+void ACameraPawn::MoveUp(float Value)
 {
 	if (Value != 0)
 	{
@@ -54,7 +58,7 @@ void APlayerCamera::MoveUp(float Value)
 	}
 }
 
-void APlayerCamera::MoveRight(float Value)
+void ACameraPawn::MoveRight(float Value)
 {
 	if (Value != 0)
 	{
@@ -62,11 +66,11 @@ void APlayerCamera::MoveRight(float Value)
 	}
 }
 
-void APlayerCamera::Zoom(float Value)
+void ACameraPawn::Zoom(float Value)
 {
 	if (Value != 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%f"), Value);
-		SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength - Value * ScrollSpeed ,MinZoom, MaxZoom);
+		SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength - Value * ScrollSpeed, MinZoom, MaxZoom);
 	}
 }
+
