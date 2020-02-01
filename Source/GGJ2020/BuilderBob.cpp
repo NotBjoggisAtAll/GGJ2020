@@ -14,6 +14,29 @@ void ABuilderBob::SwapMoveDirection()
 {
 	bMoveRight = !bMoveRight;
 	AddActorWorldRotation(FRotator(0, 180, 0));
+
+	if (bMoveRight)
+	{
+		SetActorRotation(FRotator(0, 0, 0));
+	}
+	else
+	{
+		SetActorRotation(FRotator(0, 180.f, 0));
+	}
+}
+
+void ABuilderBob::SetMoveDirection(bool Value)
+{
+	bMoveRight = Value;
+
+	if (bMoveRight)
+	{
+		SetActorRotation(FRotator(0, 0, 0));
+	}
+	else
+	{
+		SetActorRotation(FRotator(0, 180.f, 0));
+	}
 }
 
 bool ABuilderBob::GetMoveRight() const

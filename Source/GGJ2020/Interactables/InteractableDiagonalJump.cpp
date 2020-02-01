@@ -17,7 +17,7 @@ void AInteractableDiagonalJump::OnInteract(ABuilderBob* Bob)
 
 	comp->SetSimulatePhysics(true);
 
-	Bob->SwapMoveDirection();
+	Bob->SetMoveDirection(bRotateRight);
 
 	auto xVel = (bRotateRight) ? SimulatedMoveSpeed : -SimulatedMoveSpeed;
 	comp->SetPhysicsLinearVelocity({ xVel, 0, 0 });

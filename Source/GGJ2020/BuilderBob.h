@@ -18,6 +18,8 @@ public:
 
 	void SwapMoveDirection();
 
+	void SetMoveDirection(bool Value);
+
 	bool GetMoveRight() const;
 
 
