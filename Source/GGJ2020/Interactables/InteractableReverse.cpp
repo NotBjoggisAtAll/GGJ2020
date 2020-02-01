@@ -6,7 +6,7 @@
 #include "Components/PrimitiveComponent.h"
 void AInteractableReverse::OnInteract(ABuilderBob* Bob)
 {
-	Bob->bMoveRight = !Bob->bMoveRight;
+	Bob->SwapMoveDirection();
 	
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
 	if (comp->IsSimulatingPhysics())

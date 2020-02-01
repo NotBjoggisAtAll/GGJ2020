@@ -10,6 +10,17 @@ ABuilderBob::ABuilderBob()
 
 }
 
+void ABuilderBob::SwapMoveDirection()
+{
+	bMoveRight = !bMoveRight;
+	AddActorWorldRotation(FRotator(0, 180, 0));
+}
+
+bool ABuilderBob::GetMoveRight() const
+{
+	return bMoveRight;
+}
+
 void ABuilderBob::OnCollected(ACollectible* Collectible)
 {
 	Collectible->SetCollected();

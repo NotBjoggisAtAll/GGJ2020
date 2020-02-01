@@ -12,7 +12,7 @@ void AInteractableJump::OnInteract(ABuilderBob* Bob)
 	comp->SetSimulatePhysics(true);
 	comp->SetConstraintMode(EDOFMode::XZPlane);
 
-	auto xVel = (Bob->bMoveRight) ? SimulatedMoveSpeed : -SimulatedMoveSpeed;
+	auto xVel = (Bob->GetMoveRight()) ? SimulatedMoveSpeed : -SimulatedMoveSpeed;
 
 	if (Bob->bSpeedBoost)
 		xVel *= 2;
