@@ -26,7 +26,6 @@ void ACollectible::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
-	AddActorLocalRotation(FRotator(-50.f * DeltaTime, 0, 0));
+	AddActorLocalRotation(Rotation * DeltaTime);
 }
 
