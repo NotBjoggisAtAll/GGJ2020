@@ -9,6 +9,14 @@
 class ABuilderBob;
 class UBoxComponent;
 
+UENUM(BlueprintType)
+enum class EMaterialType : uint8
+{
+	Default UMETA(DisplayName  ="Default"), 
+	CanPlace  UMETA(DisplayName = "Can Place"),
+	CanNotPlace UMETA(DisplayName = "Can Not Place")
+};
+
 UCLASS()
 class GGJ2020_API ABaseInteractable : public AActor
 {
@@ -23,13 +31,24 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Collision;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(EditDefaultsOnly)
+		UMaterialInterface* CanPlaceMaterial = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+		UMaterialInterface* CanNotPlaceMaterial = nullptr;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetMaterial(EMaterialType MaterialType);
+
 protected:
 	virtual void OnInteract(ABuilderBob* Bob);
 
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
 
 
 	UFUNCTION()

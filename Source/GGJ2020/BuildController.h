@@ -18,6 +18,8 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	void SpawnInteractable();
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupInputComponent() override;
@@ -35,6 +37,8 @@ protected:
 	TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;
 
 	int InteractIndex = 0;
+	
+	ABaseInteractable* CurrentInteractable = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> BP_RedBeam;
@@ -43,6 +47,6 @@ protected:
 
 	float GridSize = 100.f;
 
-	ABaseInteractable* CurrentInteractable = nullptr;
+
 
 };
