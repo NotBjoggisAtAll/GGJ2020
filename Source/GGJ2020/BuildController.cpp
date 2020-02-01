@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
+#include "Components/StaticMeshComponent.h"
 
 ABuildController::ABuildController()
 {
@@ -19,12 +20,16 @@ void ABuildController::BeginPlay()
 
 	SetInputMode(FInputModeGameOnly());
 
+	SpawnInteractable();
+
+}
+
+void ABuildController::SpawnInteractable()
+{
 	if (BP_Interactables.Num())
 	{
 		CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
-		CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-
 }
 
 void ABuildController::SetupInputComponent()
@@ -53,10 +58,10 @@ void ABuildController::Tick(float DeltaTime)
 			CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
 			if (AllInteractables.Num() == 0)
 			{
-				//Set red material
+				CurrentInteractable->SetMaterial(EMaterialType::CanPlace);
 			}
 			else {
-				//Set green material
+				CurrentInteractable->SetMaterial(EMaterialType::CanNotPlace);
 			}
 			Beam = BeamActors[0];
 			FVector Grid = GetGridLocation();
@@ -64,6 +69,7 @@ void ABuildController::Tick(float DeltaTime)
 			{
 				CurrentInteractable->SetActorLocation(GetGridLocation());
 				Beam = nullptr;
+				CurrentInteractable->SetMaterial(EMaterialType::Default);
 			}
 			else {
 
@@ -83,6 +89,7 @@ void ABuildController::Tick(float DeltaTime)
 		{
 			CurrentInteractable->SetActorLocation(GetGridLocation());
 			Beam = nullptr;
+			CurrentInteractable->SetMaterial(EMaterialType::Default);
 		}
 	}
 }
@@ -96,10 +103,10 @@ void ABuildController::OnLeftClicked()
 		if (AllInteractables.Num() == 0)
 		{
 			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			CurrentInteractable->SetMaterial(EMaterialType::Default);
 			CurrentInteractable = nullptr;
 			Beam = nullptr;
-			CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
-			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			SpawnInteractable();
 		}
 	}
 }
@@ -126,8 +133,7 @@ void ABuildController::CycleInteractables(float Value)
 		else
 			InteractIndex = (InteractIndex ? InteractIndex : BP_Interactables.Num()) - 1;
 
-		CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
-		CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		SpawnInteractable();
 	}
 }
 

@@ -16,6 +16,8 @@ ABaseInteractable::ABaseInteractable()
 	SetRootComponent(Mesh);
 
 	Collision = CreateDefaultSubobject<UBoxComponent>("Interact Collision");
+	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	Collision->SetupAttachment(Mesh);
 
 	Collision->SetGenerateOverlapEvents(true);
