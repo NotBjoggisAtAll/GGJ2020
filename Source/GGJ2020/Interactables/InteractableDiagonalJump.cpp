@@ -15,6 +15,11 @@ void AInteractableDiagonalJump::OnInteract(ABuilderBob* Bob)
 {
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
 
+	if (comp->IsSimulatingPhysics())
+	{
+		comp->SetSimulatePhysics(false);
+	}
+
 	comp->SetSimulatePhysics(true);
 
 	Bob->SetMoveDirection(bRotateRight);
