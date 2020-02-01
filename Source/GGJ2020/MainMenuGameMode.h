@@ -13,5 +13,8 @@ UCLASS()
 class GGJ2020_API AMainMenuGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+protected:
+	void BeginPlay() override;
 	
 };

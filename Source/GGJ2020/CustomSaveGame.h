@@ -12,13 +12,13 @@ struct FLevelData
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere)
-    FName LevelName;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int Level;
 
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TArray<int> Collected;
 
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int Max;
 };
 /**
@@ -38,7 +38,7 @@ public:
     UPROPERTY(VisibleAnywhere, Category = Basic)
     uint32 UserIndex;
 
-    UPROPERTY(VisibleAnywhere, Category = Basic)
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Basic)
     TArray<FLevelData> Levels;
     
 };

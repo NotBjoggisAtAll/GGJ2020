@@ -5,12 +5,19 @@
 #include "CustomSaveGame.h"
 #include "Kismet/GameplayStatics.h"
 
+void UCustomGameInstance::Init()
+{
+    Super::Init();
+
+    Load();
+}
+
 void UCustomGameInstance::Save()
 {
     if (auto SaveGameInstance = Cast<UCustomSaveGame>(UGameplayStatics::CreateSaveGameObject(UCustomSaveGame::StaticClass())))
     {
         // Set data on the savegame object.
-        
+        SaveGameInstance->Levels = SaveGame->Levels;
 
         // Save the data immediately.
         if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, SlotNameString, UserIndexInt32))
@@ -31,6 +38,13 @@ bool UCustomGameInstance::Load()
         UE_LOG(LogTemp, Warning, TEXT("Loaded Successfully"));
 
         return true;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to load"));
+
+        Save();
+        Load();
     }
 
     return false;
