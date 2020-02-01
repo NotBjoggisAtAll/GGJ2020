@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "BuilderBob.generated.h"
 
+class ACollectible;
+
 UCLASS()
 class GGJ2020_API ABuilderBob : public ACharacter
 {
@@ -19,6 +21,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bSpeedBoost = false;
+
+	UFUNCTION(BlueprintCallable)
+	void OnCollected(ACollectible* Collectible);
 
 protected:
 	virtual void BeginPlay() override;

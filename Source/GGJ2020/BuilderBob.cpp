@@ -2,11 +2,17 @@
 
 
 #include "BuilderBob.h"
+#include "Collectible.h"
 
 ABuilderBob::ABuilderBob()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+}
+
+void ABuilderBob::OnCollected(ACollectible* Collectible)
+{
+	Collectible->SetCollected();
 }
 
 void ABuilderBob::BeginPlay()

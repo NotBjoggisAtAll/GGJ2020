@@ -20,12 +20,17 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void SetCollected();
+
 protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Collision;
+
+	UPROPERTY(EditDefaultsOnly)
+	UMaterialInterface* TakenMaterial;
 
 	UPROPERTY(EditDefaultsOnly)
 	FRotator Rotation = FRotator(50.f, 0, 0);
