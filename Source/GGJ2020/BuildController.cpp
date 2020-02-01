@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
 #include "Components/StaticMeshComponent.h"
+#include "CameraPawn.h"
 
 ABuildController::ABuildController()
 {
@@ -22,6 +23,8 @@ void ABuildController::BeginPlay()
 
 	SpawnInteractable();
 
+	ControllingPawn = Cast<ACameraPawn>(GetPawn());
+	
 }
 
 void ABuildController::SpawnInteractable()
@@ -49,7 +52,6 @@ void ABuildController::Tick(float DeltaTime)
 
 	if (CurrentInteractable)
 	{
-
 		TArray<AActor*> BeamActors;
 		CurrentInteractable->GetOverlappingActors(BeamActors, BP_RedBeam);
 		if (BeamActors.Num() != 0)
@@ -64,10 +66,10 @@ void ABuildController::Tick(float DeltaTime)
 				CurrentInteractable->SetMaterial(EMaterialType::CanNotPlace);
 			}
 			Beam = BeamActors[0];
-			FVector Grid = GetGridLocation();
+			GridSnapLocation = GetGridLocation();
 			if (FVector::Dist(CurrentInteractable->GetActorLocation(), GetGridLocation()) > GridSize * 2)
 			{
-				CurrentInteractable->SetActorLocation(GetGridLocation());
+				CurrentInteractable->SetActorLocation(ControllingPawn->IsMoving() ? GetMouseLocation() : GetGridLocation());
 				Beam = nullptr;
 				CurrentInteractable->SetMaterial(EMaterialType::Default);
 			}
@@ -75,19 +77,19 @@ void ABuildController::Tick(float DeltaTime)
 
 				if (FMath::Abs(Beam->GetActorRotation().Pitch) == 0) //Horizontal
 				{
-					Grid.Z = Beam->GetActorLocation().Z;
-					CurrentInteractable->SetActorLocation(Grid);
+					GridSnapLocation.Z = Beam->GetActorLocation().Z;
+					CurrentInteractable->SetActorLocation(ControllingPawn->IsMoving() ? GetMouseLocation() : GridSnapLocation);
 				}
 				else //Vertical
 				{
-					Grid.X = Beam->GetActorLocation().X;
-					CurrentInteractable->SetActorLocation(Grid);
+					GridSnapLocation.X = Beam->GetActorLocation().X;
+					CurrentInteractable->SetActorLocation(ControllingPawn->IsMoving() ? GetMouseLocation() : GridSnapLocation);
 				}
 			}
 		}
 		else
 		{
-			CurrentInteractable->SetActorLocation(GetGridLocation());
+			CurrentInteractable->SetActorLocation(ControllingPawn->IsMoving() ? GetMouseLocation() : GetGridLocation());
 			Beam = nullptr;
 			CurrentInteractable->SetMaterial(EMaterialType::Default);
 		}
@@ -102,6 +104,7 @@ void ABuildController::OnLeftClicked()
 		CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
 		if (AllInteractables.Num() == 0)
 		{
+			CurrentInteractable->SetActorLocation(GridSnapLocation);
 			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 			CurrentInteractable->SetMaterial(EMaterialType::Default);
 			CurrentInteractable = nullptr;
@@ -137,13 +140,19 @@ void ABuildController::CycleInteractables(float Value)
 	}
 }
 
-FVector ABuildController::GetGridLocation()
+FVector ABuildController::GetMouseLocation()
 {
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, HitResult);
 	FVector Location = HitResult.Location;
+	Location.Y = 0;
+	return Location;
+}
+
+FVector ABuildController::GetGridLocation()
+{
+	FVector Location = GetMouseLocation();
 
 	Location.X = FMath::RoundToFloat(Location.X / GridSize) * GridSize;
-	Location.Y = 0;
 	Location.Z = FMath::RoundToFloat(Location.Z / GridSize) * GridSize;
 
 	return Location;

@@ -7,11 +7,10 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
-
 // Sets default values
 ACameraPawn::ACameraPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Scene = CreateDefaultSubobject<USceneComponent>("Scene");
@@ -55,6 +54,10 @@ void ACameraPawn::MoveUp(float Value)
 	if (Value != 0)
 	{
 		AddActorWorldOffset(FVector(0, 0, 1) * MovementSpeed * Value);
+		bIsMovingUp = true;
+	}
+	else {
+		bIsMovingUp = false;
 	}
 }
 
@@ -63,6 +66,10 @@ void ACameraPawn::MoveRight(float Value)
 	if (Value != 0)
 	{
 		AddActorWorldOffset(FVector(1, 0, 0) * MovementSpeed * Value);
+		bIsMovingRight = true;
+	}
+	else {
+		bIsMovingRight = false;
 	}
 }
 
@@ -71,6 +78,14 @@ void ACameraPawn::Zoom(float Value)
 	if (Value != 0)
 	{
 		SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength - Value * ScrollSpeed, MinZoom, MaxZoom);
+		bIsZooming = true;
+	}
+	else {
+		bIsZooming = false;
 	}
 }
 
+bool ACameraPawn::IsMoving()
+{
+	return (bIsMovingUp || bIsMovingRight || bIsZooming);
+}

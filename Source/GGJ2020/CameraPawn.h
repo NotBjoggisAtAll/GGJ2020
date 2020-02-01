@@ -38,6 +38,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxZoom = 2000.f;
 
+	bool IsMoving();
+
+	bool bIsMovingUp = false;
+	bool bIsMovingRight = false;
+	bool bIsZooming = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -49,4 +54,5 @@ protected:
 	void MoveUp(float Value);
 	void MoveRight(float Value);
 	void Zoom(float Value);
+	
 };
