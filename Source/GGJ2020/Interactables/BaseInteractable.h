@@ -32,7 +32,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Collision;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditDefaultsOnly)
