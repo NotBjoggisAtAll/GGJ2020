@@ -17,8 +17,11 @@ void UCustomGameInstance::Save()
     if (auto SaveGameInstance = Cast<UCustomSaveGame>(UGameplayStatics::CreateSaveGameObject(UCustomSaveGame::StaticClass())))
     {
         // Set data on the savegame object.
-        SaveGameInstance->Levels = SaveGame->Levels;
-
+        if (SaveGame)
+        {
+            SaveGameInstance->Levels = SaveGame->Levels;
+        }
+       
         // Save the data immediately.
         if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, SlotNameString, UserIndexInt32))
         {
