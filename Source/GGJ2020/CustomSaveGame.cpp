@@ -3,3 +3,8 @@
 
 #include "CustomSaveGame.h"
 
+UCustomSaveGame::UCustomSaveGame()
+{
+	SaveSlotName = TEXT("TestSaveSlot");
+	UserIndex = 0;
+}

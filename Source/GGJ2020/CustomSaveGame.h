@@ -7,7 +7,20 @@
 #include "CustomSaveGame.generated.h"
 
 
+USTRUCT(BlueprintType)
+struct FLevelData
+{
+    GENERATED_BODY()
 
+    UPROPERTY(EditAnywhere)
+    FName LevelName;
+
+    UPROPERTY(EditAnywhere)
+    TArray<int> Collected;
+
+    UPROPERTY(EditAnywhere)
+    int Max;
+};
 /**
  * 
  */
@@ -17,11 +30,15 @@ class GGJ2020_API UCustomSaveGame : public USaveGame
 	GENERATED_BODY()
 
 public:
+    UCustomSaveGame();
+
     UPROPERTY(VisibleAnywhere, Category = Basic)
     FString SaveSlotName;
 
     UPROPERTY(VisibleAnywhere, Category = Basic)
     uint32 UserIndex;
 
+    UPROPERTY(VisibleAnywhere, Category = Basic)
+    TArray<FLevelData> Levels;
     
 };
