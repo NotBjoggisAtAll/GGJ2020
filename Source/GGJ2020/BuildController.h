@@ -50,6 +50,7 @@ protected:
 
 	int InteractIndex = 0;
 
+	UPROPERTY(BlueprintReadOnly)
 	ABaseInteractable* CurrentInteractable = nullptr;
 
 	UPROPERTY(EditAnywhere)
