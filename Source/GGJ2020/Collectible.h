@@ -27,4 +27,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Collision;
 
+	UPROPERTY(EditDefaultsOnly)
+	FRotator Rotation = FRotator(50.f, 0, 0);
+
 };
