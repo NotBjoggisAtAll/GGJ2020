@@ -22,7 +22,7 @@ void ABuildController::BeginPlay()
 	SpawnInteractable();
 
 	ControllingPawn = Cast<ACameraPawn>(GetPawn());
-	
+
 }
 
 void ABuildController::SpawnInteractable()
@@ -117,8 +117,10 @@ void ABuildController::OnRightClicked()
 	TArray<AActor*> AllInteractables;
 	CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
 	for (auto& Interactable : AllInteractables)
-		Interactable->Destroy();
-
+	{
+		if (Cast<ABaseInteractable>(Interactable)->bIsDestroyable)
+			Interactable->Destroy();
+	}
 }
 
 void ABuildController::CycleInteractables(float Value)

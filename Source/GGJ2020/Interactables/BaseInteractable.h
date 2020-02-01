@@ -36,6 +36,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere)
+	bool bIsDestroyable = true;
+
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetMaterial(EMaterialType MaterialType);
 
