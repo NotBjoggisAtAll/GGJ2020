@@ -19,10 +19,12 @@ public:
 	
 protected:
 
+	void BeginPlay();
+
 	void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditDefaultsOnly)
-	float SawbladeRotationSpeed = 50.f;
+	float SawbladeRotationSpeed = 200.f;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Sawblade;
