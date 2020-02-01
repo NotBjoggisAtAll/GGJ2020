@@ -12,6 +12,8 @@ ACollectible::ACollectible()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	SetRootComponent(Mesh);
 
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	Collision = CreateDefaultSubobject<UBoxComponent>("Collision");
 	Collision->SetupAttachment(Mesh);
 }
@@ -20,6 +22,14 @@ void ACollectible::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ACollectible::SetCollected()
+{
+	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	if(TakenMaterial)
+		Mesh->SetMaterial(0, TakenMaterial);
 }
 
 void ACollectible::Tick(float DeltaTime)
