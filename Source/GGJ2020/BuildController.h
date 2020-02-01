@@ -25,9 +25,11 @@ protected:
 	FVector GetGridLocation();
 	FHitResult HitResult;
 
-	void OnMouseClicked();
+	void OnLeftClicked();
 
-	void CycleInteractables();
+	void OnRightClicked();
+
+	void CycleInteractables(float Value);
 
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;

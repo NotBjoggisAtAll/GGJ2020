@@ -32,8 +32,10 @@ void ABuildController::SetupInputComponent()
 	Super::SetupInputComponent();
 	check(InputComponent != nullptr);
 
-	InputComponent->BindAction("Place", EInputEvent::IE_Pressed, this, &ABuildController::OnMouseClicked);
-	InputComponent->BindAction("CycleInteractables", IE_Pressed, this, &ABuildController::CycleInteractables);
+	InputComponent->BindAction("Place", EInputEvent::IE_Pressed, this, &ABuildController::OnLeftClicked);
+	InputComponent->BindAction("Remove", EInputEvent::IE_Pressed, this, &ABuildController::OnRightClicked);
+
+	InputComponent->BindAxis("CycleInteractables", this, &ABuildController::CycleInteractables);
 }
 
 void ABuildController::Tick(float DeltaTime)
@@ -76,7 +78,6 @@ void ABuildController::Tick(float DeltaTime)
 					CurrentInteractable->SetActorLocation(Grid);
 				}
 			}
-
 		}
 		else
 		{
@@ -86,9 +87,8 @@ void ABuildController::Tick(float DeltaTime)
 	}
 }
 
-void ABuildController::OnMouseClicked()
+void ABuildController::OnLeftClicked()
 {
-
 	if (Beam)
 	{
 		TArray<AActor*> AllInteractables;
@@ -104,12 +104,28 @@ void ABuildController::OnMouseClicked()
 	}
 }
 
-void ABuildController::CycleInteractables()
+void ABuildController::OnRightClicked()
 {
+	TArray<AActor*> AllInteractables;
+	CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
+	for (auto& Interactable : AllInteractables)
+		Interactable->Destroy();
+
+}
+
+void ABuildController::CycleInteractables(float Value)
+{
+	if (Value == 0)
+		return;
+
 	if (CurrentInteractable)
 	{
 		CurrentInteractable->Destroy();
-		InteractIndex = ++InteractIndex % BP_Interactables.Num();
+		if (Value > 0)
+			InteractIndex = (InteractIndex + 1) % BP_Interactables.Num();
+		else
+			InteractIndex = (InteractIndex ? InteractIndex : BP_Interactables.Num()) - 1;
+
 		CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
 		CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
