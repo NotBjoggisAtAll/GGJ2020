@@ -8,6 +8,7 @@
 
 class ABuilderBob;
 class UBoxComponent;
+class UImage;
 
 UENUM(BlueprintType)
 enum class EMaterialType : uint8
@@ -34,6 +35,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(EditAnywhere)
+	bool bIsDestroyable = true;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetMaterial(EMaterialType MaterialType);

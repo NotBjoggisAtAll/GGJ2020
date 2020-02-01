@@ -9,6 +9,9 @@
 class ABaseInteractable;
 class ACameraPawn;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScroll, int, CurrentIndex);
+
+
 UCLASS()
 class GGJ2020_API ABuildController : public APlayerController
 {
@@ -36,15 +39,24 @@ protected:
 
 	FVector GetMouseLocation();
 
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<UTexture2D*> SelectedIcons;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<UTexture2D*> UnselectedIcons;
 
 	int InteractIndex = 0;
-	
+
 	ABaseInteractable* CurrentInteractable = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> BP_RedBeam;
+		TSubclassOf<AActor> BP_RedBeam;
+
+	UPROPERTY(BlueprintAssignable, Category = Delegates)
+		FOnScroll OnScroll;
 
 	AActor* Beam = nullptr;
 
