@@ -27,11 +27,17 @@ protected:
 
 	void OnMouseClicked();
 
+	void CycleInteractables();
+
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<ABaseInteractable> BP_CurrentInteractable;
+	TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;
+
+	int InteractIndex = 0;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> BP_RedBeam;
+
+	AActor* Beam = nullptr;
 
 	float GridSize = 100.f;
 

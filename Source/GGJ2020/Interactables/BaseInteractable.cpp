@@ -11,6 +11,8 @@ ABaseInteractable::ABaseInteractable()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	Mesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 	SetRootComponent(Mesh);
 
 	Collision = CreateDefaultSubobject<UBoxComponent>("Interact Collision");

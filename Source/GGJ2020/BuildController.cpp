@@ -10,7 +10,7 @@
 ABuildController::ABuildController()
 {
 	bShowMouseCursor = true;
-	
+
 }
 
 void ABuildController::BeginPlay()
@@ -19,9 +19,12 @@ void ABuildController::BeginPlay()
 
 	SetInputMode(FInputModeGameOnly());
 
-//	CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_CurrentInteractable, GetGridLocation(), FRotator(0,0,0));
-	//CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	
+	if (BP_Interactables.Num())
+	{
+		CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
+		CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+
 }
 
 void ABuildController::SetupInputComponent()
@@ -30,6 +33,7 @@ void ABuildController::SetupInputComponent()
 	check(InputComponent != nullptr);
 
 	InputComponent->BindAction("Place", EInputEvent::IE_Pressed, this, &ABuildController::OnMouseClicked);
+	InputComponent->BindAction("CycleInteractables", IE_Pressed, this, &ABuildController::CycleInteractables);
 }
 
 void ABuildController::Tick(float DeltaTime)
@@ -37,20 +41,78 @@ void ABuildController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (CurrentInteractable)
-		CurrentInteractable->SetActorLocation(GetGridLocation());
+	{
+
+		TArray<AActor*> BeamActors;
+		CurrentInteractable->GetOverlappingActors(BeamActors, BP_RedBeam);
+		if (BeamActors.Num() != 0)
+		{
+			TArray<AActor*> AllInteractables;
+			CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
+			if (AllInteractables.Num() == 0)
+			{
+				//Set red material
+			}
+			else {
+				//Set green material
+			}
+			Beam = BeamActors[0];
+			FVector Grid = GetGridLocation();
+			if (FVector::Dist(CurrentInteractable->GetActorLocation(), GetGridLocation()) > GridSize * 2)
+			{
+				CurrentInteractable->SetActorLocation(GetGridLocation());
+				Beam = nullptr;
+			}
+			else {
+
+				if (FMath::Abs(Beam->GetActorRotation().Pitch) == 0) //Horizontal
+				{
+					Grid.Z = Beam->GetActorLocation().Z;
+					CurrentInteractable->SetActorLocation(Grid);
+				}
+				else //Vertical
+				{
+					Grid.X = Beam->GetActorLocation().X;
+					CurrentInteractable->SetActorLocation(Grid);
+				}
+			}
+
+		}
+		else
+		{
+			CurrentInteractable->SetActorLocation(GetGridLocation());
+			Beam = nullptr;
+		}
+	}
 }
 
 void ABuildController::OnMouseClicked()
 {
 
-	TArray<AActor*> Actors;
-	CurrentInteractable->GetOverlappingActors(Actors, BP_RedBeam);
+	if (Beam)
+	{
+		TArray<AActor*> AllInteractables;
+		CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
+		if (AllInteractables.Num() == 0)
+		{
+			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			CurrentInteractable = nullptr;
+			Beam = nullptr;
+			CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
+			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+}
 
-	for(const auto& Actor : Actors)
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *GetNameSafe(Actor));
-
-	//CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	//CurrentInteractable = nullptr;
+void ABuildController::CycleInteractables()
+{
+	if (CurrentInteractable)
+	{
+		CurrentInteractable->Destroy();
+		InteractIndex = ++InteractIndex % BP_Interactables.Num();
+		CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_Interactables[InteractIndex], GetGridLocation(), FRotator(0, 0, 0));
+		CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }
 
 FVector ABuildController::GetGridLocation()
