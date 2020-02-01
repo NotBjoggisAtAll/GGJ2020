@@ -28,7 +28,8 @@ ABaseInteractable::ABaseInteractable()
 void ABaseInteractable::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ABaseInteractable::OnInteractOverlap);
 }
 

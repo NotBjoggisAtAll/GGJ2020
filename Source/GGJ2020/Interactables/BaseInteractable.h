@@ -35,14 +35,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
-	UPROPERTY(EditDefaultsOnly)
-		UMaterialInterface* CanPlaceMaterial = nullptr;
-
-	UPROPERTY(EditDefaultsOnly)
-		UMaterialInterface* CanNotPlaceMaterial = nullptr;
-
 	UFUNCTION(BlueprintImplementableEvent)
-		void SetMaterial(EMaterialType MaterialType);
+	void SetMaterial(EMaterialType MaterialType);
 
 protected:
 	virtual void OnInteract(ABuilderBob* Bob);
