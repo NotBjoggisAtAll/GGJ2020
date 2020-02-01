@@ -7,6 +7,7 @@
 #include "BuildController.generated.h"
 
 class ABaseInteractable;
+class ACameraPawn;
 
 UCLASS()
 class GGJ2020_API ABuildController : public APlayerController
@@ -33,6 +34,8 @@ protected:
 
 	void CycleInteractables(float Value);
 
+	FVector GetMouseLocation();
+
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<ABaseInteractable>> BP_Interactables;
 
@@ -47,6 +50,8 @@ protected:
 
 	float GridSize = 100.f;
 
+	FVector GridSnapLocation;
 
+	ACameraPawn* ControllingPawn = nullptr;
 
 };
