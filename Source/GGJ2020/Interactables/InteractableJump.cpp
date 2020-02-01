@@ -12,7 +12,7 @@ void AInteractableJump::OnInteract(ABuilderBob* Bob)
 	comp->SetSimulatePhysics(true);
 	comp->SetConstraintMode(EDOFMode::XZPlane);
 
-	auto xVel = (Bob->bMoveRight) ? 600 : -600;
+	auto xVel = (Bob->bMoveRight) ? SimulatedMoveSpeed : -SimulatedMoveSpeed;
 
 	comp->SetPhysicsLinearVelocity(FVector(xVel, 0, 0));
 	comp->AddImpulse(GetActorUpVector() * ImpulseStrength, NAME_None, true);

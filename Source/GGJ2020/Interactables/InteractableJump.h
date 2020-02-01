@@ -18,5 +18,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float ImpulseStrength = 700.f;
 
+	UPROPERTY(EditAnywhere)
+	float SimulatedMoveSpeed = 800.f;
+
 	void OnInteract(ABuilderBob* Bob) override;
 };
