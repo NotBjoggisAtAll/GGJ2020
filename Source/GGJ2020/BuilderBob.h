@@ -17,6 +17,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool bMoveRight = true;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool bSpeedBoost = false;
+
 protected:
 	virtual void BeginPlay() override;
 
