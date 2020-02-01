@@ -17,6 +17,8 @@ class GGJ2020_API UCustomGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
+	void Init() override;
+
 	UFUNCTION(BlueprintCallable)
 	void Save();
 

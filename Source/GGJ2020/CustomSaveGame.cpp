@@ -5,6 +5,6 @@
 
 UCustomSaveGame::UCustomSaveGame()
 {
-	SaveSlotName = TEXT("TestSaveSlot");
+	SaveSlotName = TEXT("SaveSlot");
 	UserIndex = 0;
 }
