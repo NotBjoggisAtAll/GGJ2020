@@ -49,6 +49,7 @@ void ABaseInteractable::OnInteractOverlap(UPrimitiveComponent* OverlappedCompone
 	if (OtherActor->IsA(ABuilderBob::StaticClass()))
 	{
 		OnInteract(Cast<ABuilderBob>(OtherActor));
+		Destroy();
 	}
 }
 
