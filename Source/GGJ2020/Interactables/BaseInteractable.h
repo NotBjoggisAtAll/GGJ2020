@@ -8,6 +8,7 @@
 
 class ABuilderBob;
 class UBoxComponent;
+class UImage;
 
 UENUM(BlueprintType)
 enum class EMaterialType : uint8

@@ -11,8 +11,6 @@
 
 ABuildController::ABuildController()
 {
-	bShowMouseCursor = true;
-
 }
 
 void ABuildController::BeginPlay()
@@ -136,6 +134,7 @@ void ABuildController::CycleInteractables(float Value)
 		else
 			InteractIndex = (InteractIndex ? InteractIndex : BP_Interactables.Num()) - 1;
 
+		OnScroll.Broadcast(InteractIndex);
 		SpawnInteractable();
 	}
 }
