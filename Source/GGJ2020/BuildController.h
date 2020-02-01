@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ABaseInteractable> BP_CurrentInteractable;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> BP_RedBeam;
+
 	float GridSize = 100.f;
 
 	ABaseInteractable* CurrentInteractable = nullptr;

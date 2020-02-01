@@ -10,6 +10,7 @@
 ABuildController::ABuildController()
 {
 	bShowMouseCursor = true;
+	
 }
 
 void ABuildController::BeginPlay()
@@ -18,8 +19,8 @@ void ABuildController::BeginPlay()
 
 	SetInputMode(FInputModeGameOnly());
 
-	CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_CurrentInteractable, GetGridLocation(), FRotator(0,0,0));
-	CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+//	CurrentInteractable = GetWorld()->SpawnActor<ABaseInteractable>(BP_CurrentInteractable, GetGridLocation(), FRotator(0,0,0));
+	//CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 }
 
@@ -41,7 +42,12 @@ void ABuildController::Tick(float DeltaTime)
 
 void ABuildController::OnMouseClicked()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetNameSafe(HitResult.Actor.Get()));
+
+	TArray<AActor*> Actors;
+	CurrentInteractable->GetOverlappingActors(Actors, BP_RedBeam);
+
+	for(const auto& Actor : Actors)
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *GetNameSafe(Actor));
 
 	//CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	//CurrentInteractable = nullptr;

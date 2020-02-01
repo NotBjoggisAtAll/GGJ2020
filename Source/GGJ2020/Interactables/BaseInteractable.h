@@ -21,6 +21,8 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* Collision;
 protected:
 	virtual void OnInteract(ABuilderBob* Bob);
 
@@ -29,8 +31,6 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
 
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* Collision;
 
 	UFUNCTION()
 	void OnInteractOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
