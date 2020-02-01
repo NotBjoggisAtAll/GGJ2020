@@ -6,9 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BuildController.generated.h"
 
-/**
- *
- */
+class ABaseInteractable;
+
 UCLASS()
 class GGJ2020_API ABuildController : public APlayerController
 {
@@ -17,6 +16,22 @@ class GGJ2020_API ABuildController : public APlayerController
 protected:
 	ABuildController();
 
+	virtual void BeginPlay() override;
+
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetupInputComponent() override;
+
+	FVector GetGridLocation();
+	FHitResult HitResult;
+
+	void OnMouseClicked();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ABaseInteractable> BP_CurrentInteractable;
+
+	float GridSize = 100.f;
+
+	ABaseInteractable* CurrentInteractable = nullptr;
 
 };
