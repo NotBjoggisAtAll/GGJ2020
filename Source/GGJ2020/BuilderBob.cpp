@@ -18,7 +18,6 @@ void ABuilderBob::BeginPlay()
 void ABuilderBob::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ABuilderBob::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
