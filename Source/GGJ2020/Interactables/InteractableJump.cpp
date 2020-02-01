@@ -14,6 +14,9 @@ void AInteractableJump::OnInteract(ABuilderBob* Bob)
 
 	auto xVel = (Bob->bMoveRight) ? SimulatedMoveSpeed : -SimulatedMoveSpeed;
 
+	if (Bob->bSpeedBoost)
+		xVel *= 2;
+
 	comp->SetPhysicsLinearVelocity(FVector(xVel, 0, 0));
 	comp->AddImpulse(GetActorUpVector() * ImpulseStrength, NAME_None, true);
 }
