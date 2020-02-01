@@ -10,12 +10,15 @@
 void AInteractableDiagonalJump::OnInteract(ABuilderBob* Bob)
 {
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
+
+	if (comp->IsSimulatingPhysics())
+	{
+		comp->SetSimulatePhysics(false);
+	}
 	comp->SetSimulatePhysics(true);
-
-	comp->SetPhysicsLinearVelocity(FVector::ZeroVector);
-
 	comp->SetConstraintMode(EDOFMode::XZPlane);
-	comp->AddImpulse(GetActorUpVector() * ImpulseStrength, NAME_None);
+
+	comp->AddImpulse(GetActorUpVector() * ImpulseStrength, NAME_None, true);
 
 	Bob->bMoveRight = !Bob->bMoveRight;
 }

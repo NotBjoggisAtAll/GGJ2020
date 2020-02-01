@@ -18,8 +18,6 @@ void ABuilderBob::BeginPlay()
 void ABuilderBob::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	UE_LOG(LogTemp, Warning, TEXT("Velocity: %s"), *GetVelocity().ToString());
 }
 
 void ABuilderBob::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
