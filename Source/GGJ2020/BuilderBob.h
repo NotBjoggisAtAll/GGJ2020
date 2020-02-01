@@ -16,8 +16,10 @@ class GGJ2020_API ABuilderBob : public ACharacter
 public:
 	ABuilderBob();
 
-	UPROPERTY(BlueprintReadOnly)
-	bool bMoveRight = true;
+	void SwapMoveDirection();
+
+	bool GetMoveRight() const;
+
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bSpeedBoost = false;
@@ -32,4 +34,6 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(BlueprintReadOnly)
+		bool bMoveRight = true;
 };
