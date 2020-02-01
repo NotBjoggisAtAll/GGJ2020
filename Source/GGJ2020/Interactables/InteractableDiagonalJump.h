@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "BaseInteractable.h"
-#include "InteractableJump.generated.h"
+#include "InteractableDiagonalJump.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GGJ2020_API AInteractableJump : public ABaseInteractable
+class GGJ2020_API AInteractableDiagonalJump : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
@@ -19,4 +19,5 @@ protected:
 	float ImpulseStrength = 700.f;
 
 	void OnInteract(ABuilderBob* Bob) override;
+
 };
