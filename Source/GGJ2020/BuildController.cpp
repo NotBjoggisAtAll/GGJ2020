@@ -7,6 +7,8 @@
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
 #include "Components/StaticMeshComponent.h"
+#include "GGJ2020GameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "CameraPawn.h"
 
 ABuildController::ABuildController()
@@ -21,6 +23,7 @@ void ABuildController::BeginPlay()
 
 	SpawnInteractable();
 
+	GameMode = Cast<AGGJ2020GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	ControllingPawn = Cast<ACameraPawn>(GetPawn());
 
 }
@@ -96,18 +99,21 @@ void ABuildController::Tick(float DeltaTime)
 
 void ABuildController::OnLeftClicked()
 {
-	if (Beam)
+	if (GameMode && GameMode->bGameHasBegun)
 	{
-		TArray<AActor*> AllInteractables;
-		CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
-		if (AllInteractables.Num() == 0)
+		if (Beam)
 		{
-			CurrentInteractable->SetActorLocation(GridSnapLocation);
-			CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			CurrentInteractable->SetMaterial(EMaterialType::Default);
-			CurrentInteractable = nullptr;
-			Beam = nullptr;
-			SpawnInteractable();
+			TArray<AActor*> AllInteractables;
+			CurrentInteractable->GetOverlappingActors(AllInteractables, ABaseInteractable::StaticClass());
+			if (AllInteractables.Num() == 0)
+			{
+				CurrentInteractable->SetActorLocation(GridSnapLocation);
+				CurrentInteractable->Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+				CurrentInteractable->SetMaterial(EMaterialType::Default);
+				CurrentInteractable = nullptr;
+				Beam = nullptr;
+				SpawnInteractable();
+			}
 		}
 	}
 }

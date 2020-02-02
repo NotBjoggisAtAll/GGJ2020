@@ -8,6 +8,7 @@
 
 class ABaseInteractable;
 class ACameraPawn;
+class AGGJ2020GameModeBase;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScroll, int, CurrentIndex);
 
@@ -64,6 +65,8 @@ protected:
 	float GridSize = 100.f;
 
 	FVector GridSnapLocation;
+
+	AGGJ2020GameModeBase* GameMode = nullptr;
 
 	ACameraPawn* ControllingPawn = nullptr;
 
