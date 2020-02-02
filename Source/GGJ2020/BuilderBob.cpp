@@ -3,6 +3,7 @@
 
 #include "BuilderBob.h"
 #include "Collectible.h"
+#include "EngineUtils.h"
 
 ABuilderBob::ABuilderBob()
 {
@@ -46,13 +47,31 @@ bool ABuilderBob::GetMoveRight() const
 
 void ABuilderBob::OnCollected(ACollectible* Collectible)
 {
+	for (int i = 0; i < WorldCollectibles.Num(); ++i)
+	{
+		if (WorldCollectibles[i] == Collectible)
+		{
+			Collection.Add(i);
+			break;
+		}
+	}
+
 	Collectible->SetCollected();
 }
 
 void ABuilderBob::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	for (TActorIterator<ACollectible> iter(GetWorld()); iter; ++iter)
+	{
+		WorldCollectibles.Add(*iter);
+	}
+
+	WorldCollectibles.Sort([](const ACollectible& C1, const ACollectible& C2)
+	{
+		return FVector::Distance(C1.GetActorLocation(), FVector(0, 0, 0)) < FVector::Distance(C2.GetActorLocation(), FVector(0, 0, 0));
+	});
 }
 
 void ABuilderBob::Tick(float DeltaTime)

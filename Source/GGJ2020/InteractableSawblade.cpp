@@ -17,6 +17,7 @@ AInteractableSawblade::AInteractableSawblade()
 
 void AInteractableSawblade::OnInteract(ABuilderBob* Bob)
 {
+	Super::OnInteract(Bob);
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
 }
 

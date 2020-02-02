@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "../BuilderBob.h"
+#include "Kismet/GameplayStatics.h"
 
 ABaseInteractable::ABaseInteractable()
 {
@@ -41,7 +42,7 @@ void ABaseInteractable::Tick(float DeltaTime)
 
 void ABaseInteractable::OnInteract(ABuilderBob* Bob)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Interacted"));
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), InteractSound, GetActorLocation());
 }
 
 void ABaseInteractable::OnInteractOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

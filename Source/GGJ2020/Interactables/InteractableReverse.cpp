@@ -6,6 +6,7 @@
 #include "Components/PrimitiveComponent.h"
 void AInteractableReverse::OnInteract(ABuilderBob* Bob)
 {
+	Super::OnInteract(Bob);
 	Bob->SwapMoveDirection();
 	
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
