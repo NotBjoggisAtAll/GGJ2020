@@ -38,4 +38,11 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 		bool bMoveRight = true;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<ACollectible*> WorldCollectibles;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<int> Collection;
+
 };
