@@ -36,6 +36,8 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void FellOutOfWorld(const UDamageType& DmgType) override;
+
 	UPROPERTY(BlueprintReadOnly)
 		bool bMoveRight = true;
 

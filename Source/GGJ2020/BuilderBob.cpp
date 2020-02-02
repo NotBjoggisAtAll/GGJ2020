@@ -4,6 +4,7 @@
 #include "BuilderBob.h"
 #include "Collectible.h"
 #include "EngineUtils.h"
+#include "Kismet/GameplayStatics.h"
 
 ABuilderBob::ABuilderBob()
 {
@@ -84,4 +85,10 @@ void ABuilderBob::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+void ABuilderBob::FellOutOfWorld(const UDamageType& DmgType)
+{
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
+}
+
 
