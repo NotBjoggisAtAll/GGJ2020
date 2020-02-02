@@ -36,6 +36,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* InteractSound = nullptr;
+
 	UPROPERTY(EditAnywhere)
 	bool bIsDestroyable = true;
 

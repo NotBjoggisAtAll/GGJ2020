@@ -13,6 +13,8 @@ AInteractableDiagonalJump::AInteractableDiagonalJump()
 
 void AInteractableDiagonalJump::OnInteract(ABuilderBob* Bob)
 {
+	Super::OnInteract(Bob);
+
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
 
 	if (comp->IsSimulatingPhysics())

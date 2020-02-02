@@ -8,6 +8,7 @@
 
 void AInteractableJump::OnInteract(ABuilderBob* Bob)
 {
+	Super::OnInteract(Bob);
 	auto comp = Cast<UPrimitiveComponent>(Bob->GetRootComponent());
 	comp->SetSimulatePhysics(true);
 	comp->SetConstraintMode(EDOFMode::XZPlane);
