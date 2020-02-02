@@ -13,5 +13,10 @@ UCLASS()
 class GGJ2020_API AGGJ2020GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bGameHasBegun = false;
 	
 };
