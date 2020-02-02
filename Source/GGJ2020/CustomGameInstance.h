@@ -28,6 +28,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	UCustomSaveGame* SaveGame;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool bMemeify = false;
+
 private:
 	FString SlotNameString = "SaveSlot";
 	uint32 UserIndexInt32 = 0;
